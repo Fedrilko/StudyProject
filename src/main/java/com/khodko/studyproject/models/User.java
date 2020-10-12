@@ -28,13 +28,17 @@ public class User {
     private String lastName;
     @Column(name = "birth_date")
     private Date birthDate;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    public User(String login, String password, String email, String firstName, String lastName, Date birthDate) {
+    public User(String login, String password, String email, String firstName, String lastName, Date birthDate, Role role) {
         this.login = login;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
+        this.role = role;
     }
 }
