@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.khodko.studyproject.dao.RoleDao;
 import com.khodko.studyproject.dao.UserDao;
 
-//@Controller
+@Controller
 public class DaoTestController {
-	
-	@Autowired
-	private RoleDao roleDao;
-	
-	@Autowired
-	private UserDao userDao;
-	
-	@GetMapping("/testRoleDao")
-	@ResponseBody
-	public String testRoleDao() {
-		return roleDao.findByName("Admin").toString();
-	}
-	
-	@GetMapping("/testUserDao")
-	@ResponseBody
-	public String testUserDao() {
-		return roleDao.findByName("Admin").toString();
-	}
+
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @GetMapping("/testRoleDao")
+    @ResponseBody
+    public String testRoleDao() {
+        return roleDao.findByName("Admin").toString();
+    }
+
+    @GetMapping("/testUserDao")
+    @ResponseBody
+    public String testUserDao() {
+        return userDao.findByLogin("fredor").toString();
+    }
 }

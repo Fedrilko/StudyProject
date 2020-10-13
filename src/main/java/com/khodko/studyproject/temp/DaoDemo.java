@@ -6,6 +6,9 @@ import org.hibernate.cfg.Configuration;
 
 import com.khodko.studyproject.models.Role;
 import com.khodko.studyproject.models.User;
+import org.hibernate.query.Query;
+
+import java.util.Date;
 
 public class DaoDemo {
 
@@ -17,12 +20,25 @@ public class DaoDemo {
 				.buildSessionFactory();
 		
 		Session s = sf.openSession();
+
+		//save user
 		s.beginTransaction();
-		User u  = new User("fredor", "root", "lol@kek.com", "Fedor", "Khodko", null, null);
+		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
+				"Ivanov", new Date(1989, 10,16), getRole("Admin", sf));
 		s.save(u);
 		s.getTransaction().commit();
+
+
 		s.close();
 		sf.close();
+	}
+
+	public static Role getRole(String roleName, SessionFactory sf) {
+		try(Session s = sf.openSession()) {
+			Query q = s.createQuery("from Role r where r.name = :name");
+			q.setParameter("name", roleName);
+			return (Role)q.getSingleResult();
+		}
 	}
 
 }

@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.khodko.studyproject.dao.UserDao;
 import com.khodko.studyproject.models.User;
+import org.springframework.stereotype.Component;
 
+//TODO: add handling of missing data (return null issue)
+
+@Component
 public class HibernateUserDao implements UserDao {
 	
 	@Autowired

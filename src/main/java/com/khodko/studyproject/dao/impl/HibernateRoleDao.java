@@ -8,16 +8,17 @@ import org.hibernate.query.Query;
 
 import com.khodko.studyproject.dao.RoleDao;
 import com.khodko.studyproject.models.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+//TODO: add handling of missing data (return null issue)
+
+@Component
 public class HibernateRoleDao implements RoleDao {
-	
+	@Autowired
 	SessionFactory sessionFactory;
 	
-    public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
-	@Override
+   	@Override
     @Transactional
     public void create(Role role) {
     	Session session = sessionFactory.getCurrentSession();
@@ -28,8 +29,9 @@ public class HibernateRoleDao implements RoleDao {
     @Transactional
     public void update(Role role) {
     	Session session = sessionFactory.getCurrentSession();
-//    	role = session.get(Role.class, role.getId());
-    	//WTF is going on here? Why should we do this?
+    	Role existingRole = session.get(Role.class, role.getId());
+    	existingRole.setName(role.getName());
+//    	session.save(existingRole);
     }
 
     @Override
