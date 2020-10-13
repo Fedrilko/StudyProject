@@ -35,13 +35,23 @@ public class HibernateUserDao implements UserDao {
     public void update(User user) {
         if(user.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
         Session session = sessionFactory.getCurrentSession();
-        User existingUser = session.get(User.class, user.getId());
-        existingUser.setFirstName(user.getFirstName());
-        existingUser.setLastName(user.getFirstName());
-        existingUser.setLogin(user.getLogin());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setBirthDate(user.getBirthDate());
+        Query query = session.createQuery("update User u set u.firstName = :firstName," +
+                "u.lastName = :lastName, u.login = :login, u.password = :password," +
+                "u.email = :email where u.id = :id");
+        query.setParameter("firstName", user.getFirstName());
+        query.setParameter("lastName", user.getLastName());
+        query.setParameter("login", user.getLogin());
+        query.setParameter("password", user.getPassword());
+        query.setParameter("email", user.getEmail());
+        query.setParameter("id", user.getId());
+
+//        User existingUser = session.get(User.class, user.getId());
+//        existingUser.setFirstName(user.getFirstName());
+//        existingUser.setLastName(user.getFirstName());
+//        existingUser.setLogin(user.getLogin());
+//        existingUser.setPassword(user.getPassword());
+//        existingUser.setEmail(user.getEmail());
+//        existingUser.setBirthDate(user.getBirthDate());
     }
 
     @Override

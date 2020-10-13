@@ -32,8 +32,15 @@ public class HibernateRoleDao implements RoleDao {
     public void update(Role role) {
    	    if(role.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
     	Session session = sessionFactory.getCurrentSession();
-    	Role existingRole = session.get(Role.class, role.getId());
-    	existingRole.setName(role.getName());
+
+    	//Next two lines produce two requests to the db
+//    	Role existingRole = session.get(Role.class, role.getId());
+//    	existingRole.setName(role.getName());
+        //Refactoring:
+        Query query = session.createQuery("update Role r set r.name = :name where r.id = :id");
+        query.setParameter("name", role.getName());
+        query.setParameter("id", role.getId());
+
     }
 
     @Override

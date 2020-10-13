@@ -23,19 +23,19 @@ public class DaoDemo {
 		Session s = sf.openSession();
 
 		//save user
-		s.beginTransaction();
-		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
-				"Ivanov", new Date(1989, 10,16), null);
-		s.save(u);
-		u.setFirstName("Ivan");
-		u.setLastName("Ivanov");
+//		s.beginTransaction();
+//		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
+//				"Ivanov", new Date(1989, 10,16), null);
+//		s.save(u);
+//		u.setFirstName("Ivan");
+//		u.setLastName("Ivanov");
 //		System.out.println(s.get(User.class, u.getId()).equals(u));//cached object returns
 //		u.setLastName("Petrov");
 //		u.setPassword("lol");
 //		User u2 = new User();
 //		u2.setId(u.getId());
 //		s.save(u2);
-		s.getTransaction().commit();
+//		s.getTransaction().commit();
 
 
 		//update user
@@ -46,7 +46,33 @@ public class DaoDemo {
 //		s.getTransaction().commit();
 
 
+		//update role
+//		s.beginTransaction();
+//		Role role = new Role("User");
+//		role.setId(1);
+//		Query query = s.createQuery("update Role r set r.name = :name where r.id = :id");
+//		query.setParameter("name", role.getName());
+//		query.setParameter("id", role.getId());
+//		query.executeUpdate();
+//		s.getTransaction().commit();
 
+
+		//update user
+		s.beginTransaction();
+		User user  = new User("fedor", "root", "ssdfsdfdfsdfdf@kek.com", "Fedor",
+				"Fedorov", new Date(1989, 10,16), null);
+		user.setId(23);
+		Query query = s.createQuery("update User u set u.firstName = :firstName," +
+				"u.lastName = :lastName, u.login = :login, u.password = :password," +
+				"u.email = :email where u.id = :id");
+		query.setParameter("firstName", user.getFirstName());
+		query.setParameter("lastName", user.getLastName());
+		query.setParameter("login", user.getLogin());
+		query.setParameter("password", user.getPassword());
+		query.setParameter("email", user.getEmail());
+		query.setParameter("id", user.getId());
+		query.executeUpdate();
+		s.getTransaction().commit();
 
 		s.close();
 		sf.close();
