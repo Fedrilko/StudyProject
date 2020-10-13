@@ -6,16 +6,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.khodko.studyproject.dao.RoleDao;
+import com.khodko.studyproject.dao.UserDao;
 
 //@Controller
 public class DaoTestController {
 	
 	@Autowired
-	private RoleDao dao;
+	private RoleDao roleDao;
 	
-	@GetMapping("/testDao")
+	@Autowired
+	private UserDao userDao;
+	
+	@GetMapping("/testRoleDao")
 	@ResponseBody
-	public String testDao() {
-		return dao.findByName("Admin").toString();
+	public String testRoleDao() {
+		return roleDao.findByName("Admin").toString();
+	}
+	
+	@GetMapping("/testUserDao")
+	@ResponseBody
+	public String testUserDao() {
+		return roleDao.findByName("Admin").toString();
 	}
 }
