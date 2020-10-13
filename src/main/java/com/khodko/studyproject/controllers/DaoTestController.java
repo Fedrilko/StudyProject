@@ -1,5 +1,6 @@
 package com.khodko.studyproject.controllers;
 
+import com.khodko.studyproject.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.khodko.studyproject.dao.RoleDao;
 import com.khodko.studyproject.dao.UserDao;
+
+import java.util.List;
 
 @Controller
 public class DaoTestController {
@@ -26,6 +29,10 @@ public class DaoTestController {
     @GetMapping("/testUserDao")
     @ResponseBody
     public String testUserDao() {
-        return userDao.findByLogin("fredor").toString();
+//        User user = userDao.findByLogin("fredor");
+//        return user.toString();
+        List<User> users = userDao.findAll();
+//        int size = users.size();
+        return users.toString();
     }
 }

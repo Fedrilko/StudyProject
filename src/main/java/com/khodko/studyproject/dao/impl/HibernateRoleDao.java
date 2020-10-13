@@ -11,7 +11,9 @@ import com.khodko.studyproject.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-//TODO: add handling of missing data (return null issue)
+//TODO: add handling of empty result (return null issue)
+//TODO: add handling of invalid parameters
+//TODO: add cascade relationship
 
 @Component
 public class HibernateRoleDao implements RoleDao {
@@ -28,15 +30,16 @@ public class HibernateRoleDao implements RoleDao {
     @Override
     @Transactional
     public void update(Role role) {
+   	    if(role.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
     	Session session = sessionFactory.getCurrentSession();
     	Role existingRole = session.get(Role.class, role.getId());
     	existingRole.setName(role.getName());
-//    	session.save(existingRole);
     }
 
     @Override
     @Transactional
     public void remove(Role role) {
+        if(role.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
     	Session session = sessionFactory.getCurrentSession();
     	session.delete(role);
     }

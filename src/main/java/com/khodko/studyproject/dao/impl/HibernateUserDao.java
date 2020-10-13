@@ -13,7 +13,9 @@ import com.khodko.studyproject.dao.UserDao;
 import com.khodko.studyproject.models.User;
 import org.springframework.stereotype.Component;
 
-//TODO: add handling of missing data (return null issue)
+//TODO: add handling of empty result (return null issue)
+//TODO: add handling of invalid parameters
+//TODO: add cascade relationship
 
 @Component
 public class HibernateUserDao implements UserDao {
@@ -31,24 +33,36 @@ public class HibernateUserDao implements UserDao {
     @Override
     @Transactional
     public void update(User user) {
-
+        if(user.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
+        Session session = sessionFactory.getCurrentSession();
+        User existingUser = session.get(User.class, user.getId());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getFirstName());
+        existingUser.setLogin(user.getLogin());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setBirthDate(user.getBirthDate());
     }
 
     @Override
     @Transactional
     public void remove(User user) {
-
+        if(user.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(user);
     }
 
     @Override
     @Transactional
     public List<User> findAll() {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User");
+        return query.list();//returns empty list if nothing is found
     }
 
     @Override
     @Transactional
-    public User findByLogin(String login) {
+    public User findByLogin(String login) { //login s/b unique in the database
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from User u where u.login = :login");
     	query.setParameter("login", login);
@@ -58,6 +72,9 @@ public class HibernateUserDao implements UserDao {
     @Override
     @Transactional
     public User findByEmail(String email) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User u where u.email = :email");
+        query.setParameter("email", email);
+        return (User)query.getSingleResult();
     }
 }
