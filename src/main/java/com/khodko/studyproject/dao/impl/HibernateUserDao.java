@@ -13,8 +13,6 @@ import com.khodko.studyproject.dao.UserDao;
 import com.khodko.studyproject.models.User;
 import org.springframework.stereotype.Component;
 
-//TODO: add handling of empty result (return null issue)
-//TODO: add handling of invalid parameters
 //TODO: add cascade relationship
 
 @Component
@@ -37,21 +35,14 @@ public class HibernateUserDao implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("update User u set u.firstName = :firstName," +
                 "u.lastName = :lastName, u.login = :login, u.password = :password," +
-                "u.email = :email where u.id = :id");
+                "u.email = :email, u.birthDate = :birthDate where u.id = :id");
         query.setParameter("firstName", user.getFirstName());
         query.setParameter("lastName", user.getLastName());
         query.setParameter("login", user.getLogin());
         query.setParameter("password", user.getPassword());
         query.setParameter("email", user.getEmail());
         query.setParameter("id", user.getId());
-
-//        User existingUser = session.get(User.class, user.getId());
-//        existingUser.setFirstName(user.getFirstName());
-//        existingUser.setLastName(user.getFirstName());
-//        existingUser.setLogin(user.getLogin());
-//        existingUser.setPassword(user.getPassword());
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setBirthDate(user.getBirthDate());
+        query.setParameter("birthDate", user.getBirthDate());
     }
 
     @Override
@@ -76,15 +67,21 @@ public class HibernateUserDao implements UserDao {
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from User u where u.login = :login");
     	query.setParameter("login", login);
-        return (User)query.getSingleResult();
+//    	User user = (User)query.getSingleResult(); //throws runtime NoResultException. That's bullshit
+        List<User> list = query.list();
+        if(list.size() == 0) return null;
+        else return list.get(0);
     }
 
     @Override
     @Transactional
-    public User findByEmail(String email) {
+    public User findByEmail(String email) { //email s/b unique in the database
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User u where u.email = :email");
         query.setParameter("email", email);
-        return (User)query.getSingleResult();
+//      User user = (User)query.getSingleResult();
+        List<User> list = query.list();
+        if(list.size() == 0) return null;
+        else return list.get(0);
     }
 }

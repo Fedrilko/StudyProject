@@ -11,8 +11,8 @@ import com.khodko.studyproject.models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-//TODO: add handling of empty result (return null issue)
-//TODO: add handling of invalid parameters
+import java.util.List;
+
 //TODO: add cascade relationship
 
 @Component
@@ -32,11 +32,6 @@ public class HibernateRoleDao implements RoleDao {
     public void update(Role role) {
    	    if(role.getId() == 0) throw new IllegalArgumentException("Transient object is passed as an argument");
     	Session session = sessionFactory.getCurrentSession();
-
-    	//Next two lines produce two requests to the db
-//    	Role existingRole = session.get(Role.class, role.getId());
-//    	existingRole.setName(role.getName());
-        //Refactoring:
         Query query = session.createQuery("update Role r set r.name = :name where r.id = :id");
         query.setParameter("name", role.getName());
         query.setParameter("id", role.getId());
@@ -57,6 +52,9 @@ public class HibernateRoleDao implements RoleDao {
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from Role r where r.name = :name");
     	query.setParameter("name", name);
-        return (Role)query.getSingleResult();
+//      Role role = (Role)query.getSingleResult(); //throws runtime NoResultException...
+        List<Role> list = query.list();
+        if(list.size() == 0) return null;
+        else return list.get(0);
     }
 }

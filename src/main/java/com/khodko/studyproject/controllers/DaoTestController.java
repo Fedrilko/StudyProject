@@ -35,4 +35,13 @@ public class DaoTestController {
 //        int size = users.size();
         return users.toString();
     }
+
+    @GetMapping("/findByLogin")
+    @ResponseBody
+    public String findByLogin(){
+        User user = userDao.findByLogin("pidr");
+        System.out.println(user);
+        return user.toString();//Throws exception if user is null
+    }
+
 }

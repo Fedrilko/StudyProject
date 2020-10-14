@@ -10,7 +10,7 @@ import com.khodko.studyproject.models.Role;
 import com.khodko.studyproject.models.User;
 import org.hibernate.query.Query;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class DaoDemo {
 
@@ -21,12 +21,11 @@ public class DaoDemo {
 				.buildSessionFactory();
 
 		Session s = sf.openSession();
-
 		//save user
-//		s.beginTransaction();
-//		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
-//				"Ivanov", new Date(1989, 10,16), null);
-//		s.save(u);
+		s.beginTransaction();
+		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
+				"Ivanov", Date.valueOf("1989-10-16"), null);
+		s.save(u);
 //		u.setFirstName("Ivan");
 //		u.setLastName("Ivanov");
 //		System.out.println(s.get(User.class, u.getId()).equals(u));//cached object returns
@@ -35,7 +34,7 @@ public class DaoDemo {
 //		User u2 = new User();
 //		u2.setId(u.getId());
 //		s.save(u2);
-//		s.getTransaction().commit();
+		s.getTransaction().commit();
 
 
 		//update user
@@ -58,21 +57,28 @@ public class DaoDemo {
 
 
 		//update user
-		s.beginTransaction();
-		User user  = new User("fedor", "root", "ssdfsdfdfsdfdf@kek.com", "Fedor",
-				"Fedorov", new Date(1989, 10,16), null);
-		user.setId(23);
-		Query query = s.createQuery("update User u set u.firstName = :firstName," +
-				"u.lastName = :lastName, u.login = :login, u.password = :password," +
-				"u.email = :email where u.id = :id");
-		query.setParameter("firstName", user.getFirstName());
-		query.setParameter("lastName", user.getLastName());
-		query.setParameter("login", user.getLogin());
-		query.setParameter("password", user.getPassword());
-		query.setParameter("email", user.getEmail());
-		query.setParameter("id", user.getId());
-		query.executeUpdate();
-		s.getTransaction().commit();
+//		s.beginTransaction();
+//		User user  = new User("fedor", "root", "ssdfsdfdfsdfdf@kek.com", "Fedor",
+//				"Fedorov", new Date(1989, 10,16), null);
+//		user.setId(23);
+//		Query query = s.createQuery("update User u set u.firstName = :firstName," +
+//				"u.lastName = :lastName, u.login = :login, u.password = :password," +
+//				"u.email = :email where u.id = :id");
+//		query.setParameter("firstName", user.getFirstName());
+//		query.setParameter("lastName", user.getLastName());
+//		query.setParameter("login", user.getLogin());
+//		query.setParameter("password", user.getPassword());
+//		query.setParameter("email", user.getEmail());
+//		query.setParameter("id", user.getId());
+//		query.executeUpdate();
+//		s.getTransaction().commit();
+
+
+//		s.beginTransaction();
+//		User u = new User();
+//		u.setId(23);
+//		s.save(u);
+//		s.getTransaction().commit();
 
 		s.close();
 		sf.close();
