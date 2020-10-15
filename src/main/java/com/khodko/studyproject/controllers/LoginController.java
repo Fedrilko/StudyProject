@@ -23,21 +23,20 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestParam(name = "login") String login, 
 			@RequestParam(name = "password") String password,
-			RedirectAttributes attrs, Model model, HttpSession session) {
+			Model model, HttpSession session) {
 		User user = userDao.findByLogin(login);
 		if(user == null) {
 //			model.addAttribute("msg", "User does not exist");
 			session.setAttribute("msg", "User does not exist");
-//			attrs.addAttribute("msg", "User does not exist");
 			return "redirect:/main";
 		}
 		if(!password.equals(user.getPassword())) {
 //			model.addAttribute("msg", "Wrong password");
 			session.setAttribute("msg", "Wrong password");
-//			attrs.addAttribute("msg", "Wrong password");
 			return "redirect:/main";
 		}
 		model.addAttribute("currentUser", user);
+		session.setAttribute("currentUser", user);
 		if(user.getRole().getName().equals("User")) {
 			return "user_home";
 		} else return "admin_home";
