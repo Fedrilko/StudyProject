@@ -42,9 +42,4 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<!-- 
-	<bean id="roleDao" class="com.khodko.studyproject.dao.impl.HibernateRoleDao">
-		
-	</bean>
-	 -->
 </beans>

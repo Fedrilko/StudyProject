@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-//TODO: add cascade relationship
-
 @Component
 public class HibernateRoleDao implements RoleDao {
 	@Autowired
@@ -35,7 +33,6 @@ public class HibernateRoleDao implements RoleDao {
         Query query = session.createQuery("update Role r set r.name = :name where r.id = :id");
         query.setParameter("name", role.getName());
         query.setParameter("id", role.getId());
-
     }
 
     @Override

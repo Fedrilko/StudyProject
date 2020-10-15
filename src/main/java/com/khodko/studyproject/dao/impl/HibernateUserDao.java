@@ -13,8 +13,6 @@ import com.khodko.studyproject.dao.UserDao;
 import com.khodko.studyproject.models.User;
 import org.springframework.stereotype.Component;
 
-//TODO: add cascade relationship
-
 @Component
 public class HibernateUserDao implements UserDao {
 	
@@ -67,7 +65,7 @@ public class HibernateUserDao implements UserDao {
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from User u where u.login = :login");
     	query.setParameter("login", login);
-//    	User user = (User)query.getSingleResult(); //throws runtime NoResultException. That's bullshit
+//    	User user = (User)query.getSingleResult(); //throws runtime NoResultException...
         List<User> list = query.list();
         if(list.size() == 0) return null;
         else return list.get(0);
