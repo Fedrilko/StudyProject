@@ -6,6 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<h1>Welcome, ${currentUser.firstName}</h1>
 </body>
 </html>

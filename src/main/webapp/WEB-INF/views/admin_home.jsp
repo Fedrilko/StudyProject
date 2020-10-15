@@ -6,6 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<h1>Hello, ${currentUser.firstName}! Welcome to the admin page</h1>
 </body>
 </html>
