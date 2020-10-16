@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,18 +21,10 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContextTest.xml"})
 public class HibernateUserDaoTest {
-
     @Autowired
     private UserDao userDao;
     @Autowired
     private SessionFactory sessionFactory;
-
-//    @Value("${createUsersTable}")
-//    private String createTable;
-//
-//    @Value("${deleteUsersTable}")
-//    private String deleteTable;
-
 
     @Test
     @Transactional

@@ -22,10 +22,10 @@ public class DaoDemo {
 
 		Session s = sf.openSession();
 		//save user
-		s.beginTransaction();
-		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
-				"Ivanov", Date.valueOf("1989-10-16"), null);
-		s.save(u);
+//		s.beginTransaction();
+//		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
+//				"Ivanov", Date.valueOf("1989-10-16"), null);
+//		s.save(u);
 //		u.setFirstName("Ivan");
 //		u.setLastName("Ivanov");
 //		System.out.println(s.get(User.class, u.getId()).equals(u));//cached object returns
@@ -34,15 +34,19 @@ public class DaoDemo {
 //		User u2 = new User();
 //		u2.setId(u.getId());
 //		s.save(u2);
-		s.getTransaction().commit();
+//		s.getTransaction().commit();
 
 
 		//update user
-//		s.beginTransaction();
+		s.beginTransaction();
 //		Query query = s.createQuery("from User u where u.login = 'fredor'");
 //		User user = (User)query.getSingleResult();
 //		System.out.println(user);
-//		s.getTransaction().commit();
+		User u = new User();
+		u.setId(52l);
+		u.setLogin("goga");
+		s.update(u);
+		s.getTransaction().commit();
 
 
 		//update role
