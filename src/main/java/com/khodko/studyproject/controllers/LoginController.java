@@ -29,7 +29,9 @@ public class LoginController {
 			@RequestParam(name = "password") String password,
 			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
+		
 		User user = userDao.findByLogin(login);
+		
 		if(user == null) {
 			request.setAttribute("msg", "User does not exist");
 			return "login";
@@ -38,10 +40,13 @@ public class LoginController {
 			request.setAttribute("msg", "Wrong password");
 			return "login";
 		}
+		
 		session.setAttribute("currentUser", user);
+		
 		Cookie cookie = new Cookie("currentUser", user.getLogin());
 		cookie.setMaxAge(120);
 		response.addCookie(cookie);
+		
 		if(user.getRole().getName().equals("User")) {
 			return "user_home";
 		} else {
