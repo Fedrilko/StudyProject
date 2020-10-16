@@ -19,7 +19,7 @@
 			<td><c:out value="${user.birthDate}" /></td>
 			<td><c:out value="${user.role.name}" /></td>
 			<td><a href="edit?userId=${user.id}">Edit</a> 
-			<a href="delete?userId=${user.id}">Delete</a></td>
+			<a href="remove?userId=${user.id}">Delete</a></td>
 		</tr>
 	</c:forEach>
 
