@@ -7,5 +7,6 @@
 </head>
 <body>
 <h1>Welcome, ${currentUser.firstName}</h1>
+<p>Click <a href="logout">here</a> to logout</p>
 </body>
 </html>

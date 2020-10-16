@@ -14,11 +14,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.khodko.studyproject.dao.UserDao;
 import com.khodko.studyproject.models.User;
 
+import lombok.AllArgsConstructor;
+
 @Controller
+@AllArgsConstructor
 public class LoginController {
 	
-	@Autowired
-	private UserDao userDao;
+	private final UserDao userDao;
 	
 	@PostMapping("/login")
 	public String login(@RequestParam(name = "login") String login, 
