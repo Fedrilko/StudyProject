@@ -1,17 +1,15 @@
 package com.khodko.studyproject.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.khodko.studyproject.dao.UserDao;
 import com.khodko.studyproject.models.User;
@@ -21,6 +19,8 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class LoginController {
+	
+	//TODO: add handling of different roles
 	
 	private final UserDao userDao;
 	
@@ -44,7 +44,11 @@ public class LoginController {
 		response.addCookie(cookie);
 		if(user.getRole().getName().equals("User")) {
 			return "user_home";
-		} else return "admin_home";
+		} else {
+			List<User> users = userDao.findAll();
+			session.setAttribute("users", users);
+			return "admin_home";
+		}
 			
 	}
 

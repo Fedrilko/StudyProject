@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib prefix="u" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Hello, ${currentUser.firstName}! Welcome to the admin page</h1>
-<p>Click <a href="logout">here</a> to logout</p>
+<p>Admin ${currentUser.lastName} (<a href="logout">Logout</a>) </p>
+<p><a href="addUser">Add new user</a></p>
+<u:usersTable users="${users}"/>
+
 </body>
 </html>

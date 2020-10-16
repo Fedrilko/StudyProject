@@ -23,12 +23,10 @@ public class MainController {
 		// If user exists in session:
 		User user = (User) session.getAttribute("currentUser");
 		if (user != null) {
-			System.out.println("Checking for user in session...");
 			return getViewName(user);
 		}
 		// Try to find cookie:
 		if (request.getCookies() != null) {
-			System.out.println("Checking for cookies...");
 			for (Cookie cookie : request.getCookies()) {
 				if (cookie.getName().equals("currentUser")) {
 					user = userDao.findByLogin(cookie.getValue());
