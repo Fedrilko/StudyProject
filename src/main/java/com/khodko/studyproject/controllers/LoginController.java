@@ -1,6 +1,8 @@
 package com.khodko.studyproject.controllers;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,8 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestParam(name = "login") String login, 
 			@RequestParam(name = "password") String password,
-			HttpSession session, HttpServletRequest request) {
+			HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 		User user = userDao.findByLogin(login);
 		if(user == null) {
 			request.setAttribute("msg", "User does not exist");
@@ -36,6 +39,9 @@ public class LoginController {
 			return "login";
 		}
 		session.setAttribute("currentUser", user);
+		Cookie cookie = new Cookie("currentUser", user.getLogin());
+		cookie.setMaxAge(120);
+		response.addCookie(cookie);
 		if(user.getRole().getName().equals("User")) {
 			return "user_home";
 		} else return "admin_home";

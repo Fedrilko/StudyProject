@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Welcome, ${currentUser.firstName}</h1>
+<h1>Hello, ${currentUser.firstName}!</h1>
 <p>Click <a href="logout">here</a> to logout</p>
 </body>
 </html>

@@ -12,6 +12,7 @@
 <form action="login" method="POST">
 <label>Login:</label>
 <input type="text" name="login" id="login"/>
+<label>Password:</label>
 <input type="password" name="password" id="password"/>
 <input type="submit" value="Sign in"/>
 </form>

@@ -7,5 +7,6 @@
 </head>
 <body>
 <h1>Hello, ${currentUser.firstName}! Welcome to the admin page</h1>
+<p>Click <a href="logout">here</a> to logout</p>
 </body>
 </html>
