@@ -8,18 +8,16 @@ import org.springframework.stereotype.Component;
 
 import com.khodko.studyproject.services.AgeCalculationService;
 
-import lombok.Setter;
-
 @Component
 public class BasicAgeCalculationService implements AgeCalculationService {
 
 	@Override
-	public int calculateAge(Date dateOfBirth, Date currentTime) {
-		if(dateOfBirth == null || currentTime == null) return -1;
+	public int calculateAge(Date dateOfBirth, Date current) {
+		if(dateOfBirth == null || current == null) return -1;
 		
 		LocalDate birthDate = transformDate(dateOfBirth);
 		
-		LocalDate currentDate = transformDate(currentTime);
+		LocalDate currentDate = transformDate(current);
 		
 		Period difference = Period.between(birthDate, currentDate);
 		
@@ -35,6 +33,5 @@ public class BasicAgeCalculationService implements AgeCalculationService {
 		
 		return localDate;
 	}
-
-
+	
 }

@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ attribute name="users" type="java.util.List" required="true"%>
 
+<jsp:useBean id="ageService" class="com.khodko.studyproject.services.impl.BasicAgeCalculationService" />
+
+<c:set var = "currentDate" value = "<%= new java.sql.Date(System.currentTimeMillis())%>" />
+
 <table>
 	<tr>
 		<th>Login</th>
@@ -12,11 +16,13 @@
 	</tr>
 
 	<c:forEach items="${users}" var="user">
+	<c:set var="birthDate" value="${user.birthDate}"/>
+	
 		<tr>
 			<td><c:out value="${user.login}" /></td>
 			<td><c:out value="${user.firstName}" /></td>
 			<td><c:out value="${user.lastName}" /></td>
-			<td><c:out value="${user.birthDate}" /></td>
+			<td><c:out value="${ageService.calculateAge(birthDate, currentDate)}" /></td>
 			<td><c:out value="${user.role.name}" /></td>
 			<td><a id="" href="edit?userId=${user.id}">Edit</a> 
 			<a id="delete_user" href="remove?userId=${user.id}">Delete</a></td>
