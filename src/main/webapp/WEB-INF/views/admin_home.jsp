@@ -9,7 +9,7 @@
 </head>
 <body>
 <p>Admin ${currentUser.lastName} (<a href="logout">Logout</a>) </p>
-<p><a href="addUser">Add new user</a></p>
+<p><a href="add">Add new user</a></p>
 <u:usersTable users="${users}"/>
 
 </body>

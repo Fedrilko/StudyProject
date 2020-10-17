@@ -8,6 +8,7 @@
 </head>
 <body>
 <p>Admin ${currentUser.lastName} (<a href="logout">Logout</a>) </p>
+<h1>${action} user</h1>
 
 </body>
 </html>
