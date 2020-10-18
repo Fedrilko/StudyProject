@@ -9,13 +9,21 @@
 <meta charset="utf-8">
 </head>
 <body>
+<div>
 <form action="login" method="POST">
+<div>
 <label>Login:</label>
 <input type="text" name="login" id="login"/>
+</div>
+<div>
 <label>Password:</label>
 <input type="password" name="password" id="password"/>
+</div>
+<div>
 <input type="submit" value="Sign in"/>
+</div>
 </form>
+</div>
 <c:if test="${msg != null}">
 <p>${msg}</p>
 </c:if>

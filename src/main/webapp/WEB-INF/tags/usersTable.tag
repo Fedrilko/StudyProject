@@ -24,7 +24,7 @@
 			<td><c:out value="${user.lastName}" /></td>
 			<td><c:out value="${ageService.calculateAge(birthDate, currentDate)}" /></td>
 			<td><c:out value="${user.role.name}" /></td>
-			<td><a href="update?userId=${user.id}">Edit</a> 
+			<td><a href="edit?userLogin=${user.login}">Edit</a> 
 			<a href="remove?userId=${user.id}" onclick="return confirm('Are you sure?')">Delete</a></td>
 		</tr>
 	</c:forEach>
