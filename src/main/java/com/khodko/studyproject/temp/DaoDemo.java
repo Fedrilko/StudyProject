@@ -12,6 +12,8 @@ import org.hibernate.query.Query;
 
 import java.sql.Date;
 
+import javax.persistence.NoResultException;
+
 public class DaoDemo {
 
 	public static void main(String[] args) {
@@ -38,15 +40,15 @@ public class DaoDemo {
 
 
 		//update user
-		s.beginTransaction();
+//		s.beginTransaction();
 //		Query query = s.createQuery("from User u where u.login = 'fredor'");
 //		User user = (User)query.getSingleResult();
 //		System.out.println(user);
-		User u = new User();
-		u.setId(52l);
-		u.setLogin("goga");
-		s.update(u);
-		s.getTransaction().commit();
+//		User u = new User();
+//		u.setId(52l);
+//		u.setLogin("goga");
+//		s.update(u);
+//		s.getTransaction().commit();
 
 
 		//update role
@@ -84,6 +86,19 @@ public class DaoDemo {
 //		s.save(u);
 //		s.getTransaction().commit();
 
+		
+		s.beginTransaction();
+		Query query = s.createQuery("from User u where u.email = 'petr'");
+		
+		try {
+			query.getSingleResult();
+			
+		} catch(NoResultException e) {
+			System.out.println("User not found");
+		}
+		s.getTransaction().commit();
+		
+		
 		s.close();
 		sf.close();
 	}

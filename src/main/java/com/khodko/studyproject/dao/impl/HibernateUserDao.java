@@ -15,35 +15,30 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class HibernateUserDao implements UserDao {
 	
 	private final SessionFactory sessionFactory;
 	
     @Override
-    @Transactional
     public void create(User user) {
     	Session session = sessionFactory.getCurrentSession();
     	session.save(user);
     }
 
     @Override
-    @Transactional
     public void update(User user) {
-        if(user.getId() == 0) throw new IllegalArgumentException("Transient object was passed as an argument");
         Session session = sessionFactory.getCurrentSession();
         session.update(user);
     }
 
     @Override
-    @Transactional
     public void remove(User user) {
-        if(user.getId() == 0) throw new IllegalArgumentException("Transient object was passed as an argument");
         Session session = sessionFactory.getCurrentSession();
         session.remove(user);
     }
 
     @Override
-    @Transactional
     public List<User> findAll() {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User");
@@ -51,7 +46,6 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @Transactional
     public User findByLogin(String login) { //login s/b unique in the database
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from User u where u.login = :login");
@@ -62,7 +56,6 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @Transactional
     public User findByEmail(String email) { //email s/b unique in the database
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User u where u.email = :email");

@@ -15,35 +15,30 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class HibernateRoleDao implements RoleDao {
 
 	private final SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public void create(Role role) {
     	Session session = sessionFactory.getCurrentSession();
     	session.save(role);
     }
 
     @Override
-    @Transactional
     public void update(Role role) {
-   	    if(role.getId() == 0) throw new IllegalArgumentException("Transient object was passed as an argument");
     	Session session = sessionFactory.getCurrentSession();
     	session.update(role);
     }
 
     @Override
-    @Transactional
     public void remove(Role role) {
-        if(role.getId() == 0) throw new IllegalArgumentException("Transient object was passed as an argument");
     	Session session = sessionFactory.getCurrentSession();
     	session.delete(role);
     }
 
     @Override
-    @Transactional
     public Role findByName(String name) {
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from Role r where r.name = :name");
