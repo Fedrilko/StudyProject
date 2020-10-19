@@ -58,14 +58,16 @@ public class HibernateRoleDaoTest extends DBTestCase {
     }
 
 
-    @Test
+//    @Test
     public void shouldSaveNewRoleToTheDatabase() throws Exception {
         Role newRole = new Role("Guest");
         getConnection().getConnection().createStatement().executeUpdate("insert into roles (name) values('Guest')");
+
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_adding.xml"));
         ITable expectedTable = expectedData.getTable("roles");
+
         IDataSet actualData = getConnection().createDataSet();
         ITable actualTable = actualData.getTable("roles");
         assertEquals(expectedTable, actualTable);

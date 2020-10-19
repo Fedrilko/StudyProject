@@ -22,11 +22,11 @@ import java.util.List;
 
 //import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContextTest.xml"})
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"classpath:applicationContextTest.xml"})
 public class HibernateRoleDaoTest_2 extends DBUnitConfig {
-    @Autowired
-    private RoleDao roleDao;
+//    @Autowired
+//    private RoleDao roleDao;
 //    @Autowired
 //    private SessionFactory sessionFactory;
 
@@ -45,16 +45,12 @@ public class HibernateRoleDaoTest_2 extends DBUnitConfig {
         tester.onSetup();
     }
 
-    @Override
-    protected IDataSet getDataSet() throws Exception {
-        return new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
-                .getResourceAsStream("dataset.xml"));
-    }
-
     @Test
     public void testSave() throws Exception {
-        Role newRole = new Role("Guest");
-        roleDao.create(newRole);
+//        Role newRole = new Role("Guest");
+        tester.getConnection().getConnection().createStatement().executeUpdate("insert into roles (name) values('Guest')");
+//        roleDao.create(newRole);
+
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_adding.xml"));
