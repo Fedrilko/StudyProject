@@ -43,8 +43,6 @@ public class HibernateRoleDao implements RoleDao {
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from Role r where r.name = :name");
     	query.setParameter("name", name);
-        List<Role> list = query.list();
-        if(list.size() == 0) return null;
-        else return list.get(0);
+        return (Role)query.uniqueResult();
     }
 }

@@ -50,9 +50,7 @@ public class HibernateUserDao implements UserDao {
     	Session session = sessionFactory.getCurrentSession();
     	Query query = session.createQuery("from User u where u.login = :login");
     	query.setParameter("login", login);
-        List<User> list = query.list();
-        if(list.size() == 0) return null;
-        else return list.get(0);
+        return (User)query.uniqueResult();
     }
 
     @Override
@@ -60,8 +58,6 @@ public class HibernateUserDao implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User u where u.email = :email");
         query.setParameter("email", email);
-        List<User> list = query.list();
-        if(list.size() == 0) return null;
-        else return list.get(0);
+        return (User)query.uniqueResult();
     }
 }
