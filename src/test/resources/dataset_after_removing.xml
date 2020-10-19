@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <roles id='1' name='Admin'/>
-    <roles id='2' name='User'/>
 <!--    <users id='1' login='fedor' password='root' email='fedorkhodko@gmail.com' first_name='Fedor'-->
 <!--           last_name='Khodko' birth_date='1989-10-16' role_id='1'/>-->
 <!--    <users id='2' login='ivan' password='root' email='ivan@gmail.com' first_name='Ivan'-->

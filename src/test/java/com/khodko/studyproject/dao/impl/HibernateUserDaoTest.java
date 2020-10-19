@@ -30,9 +30,12 @@ public class HibernateUserDaoTest {
     @Transactional
     @Rollback(true)
     public void create_ShouldAddNewEntry() {
+        //given
         User user = new User("petr", "root", "petro@gmail.com", "Petr",
                 "Petrov", Date.valueOf("1989-10-16"), null);
+        //when
         userDao.create(user);
+        //then
         Session session = sessionFactory.getCurrentSession();
         List<User> users = session.createQuery("from User").list();
         final int numberOfEntriesAfterInsertion = 3;
@@ -43,11 +46,14 @@ public class HibernateUserDaoTest {
     @Transactional
     @Rollback(true)
     public void shouldUpdateExistingEntry() {
+        //given
         Session session = sessionFactory.getCurrentSession();
         User user = (User) session.createQuery("from User u where u.login = 'fedor'").getSingleResult();
         String newFirstName = "Petr";
         user.setFirstName(newFirstName);
+        //when
         userDao.update(user);
+        //then
         assertEquals(newFirstName, session.get(User.class, user.getId()).getFirstName());
     }
 
@@ -55,9 +61,12 @@ public class HibernateUserDaoTest {
     @Transactional
     @Rollback(true)
     public void shouldRemoveExistingEntry() {
+        //given
         Session session = sessionFactory.getCurrentSession();
         User user = (User) session.createQuery("from User u where u.login = 'fedor'").getSingleResult();
+        //when
         userDao.remove(user);
+        //then
         List<User> users = session.createQuery("from User").list();
         final int numberOfEntriesAfterRemoval = 1;
         assertEquals(numberOfEntriesAfterRemoval, users.size());
@@ -66,7 +75,9 @@ public class HibernateUserDaoTest {
     @Test
     @Rollback(true)
     public void shouldReturnQtyOfEntries() {
+        //when
         List<User> users = userDao.findAll();
+        //then
         final int expectedNumberOfEntries = 2;
         assertEquals(expectedNumberOfEntries, users.size());
     }
@@ -82,7 +93,7 @@ public class HibernateUserDaoTest {
     }
 
     @Test
-    public void shouldReturnSpecifiedUserWithSpecifiedLogin() {
+    public void shouldReturnUserWithSpecifiedLogin() {
         assertNotNull(userDao.findByLogin("fedor"));
     }
 
@@ -92,7 +103,7 @@ public class HibernateUserDaoTest {
     }
 
     @Test
-    public void shouldReturnSpecifiedUserWithSpecifiedEmail() {
+    public void shouldReturnUserWithSpecifiedEmail() {
         assertNotNull(userDao.findByEmail("fedorkhodko@gmail.com"));
     }
 
@@ -103,7 +114,9 @@ public class HibernateUserDaoTest {
 
     @Test
     public void shouldReturnUserWithRoleAdmin() {
+        //when
         User user = userDao.findByEmail("fedorkhodko@gmail.com");
+        //then
         final String roleName = "Admin";
         assertEquals(roleName, user.getRole().getName());
     }
