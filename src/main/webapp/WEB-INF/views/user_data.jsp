@@ -66,7 +66,8 @@
 </div>
 <div>
 <input type="submit" value="Ok"/>
-<button>Cancel</button>
+<a href="main">Cancel</a>
+<!--  <button>Cancel</button>-->
 </div>
 </form>
 <c:if test="${msg != null}">

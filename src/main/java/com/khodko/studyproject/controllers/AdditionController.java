@@ -21,8 +21,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AdditionController {
 	
-	private UserDao userDao;
-	private RoleDao roleDao;
+	private final UserDao userDao;
+	private final RoleDao roleDao;
 	
 	@GetMapping("/add")
 	public String redirect(Model model) {

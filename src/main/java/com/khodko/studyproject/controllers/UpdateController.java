@@ -21,8 +21,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UpdateController {
 	
-	private UserDao userDao;
-	private RoleDao roleDao;
+	private final UserDao userDao;
+	private final RoleDao roleDao;
 	
 	@GetMapping("/edit")
 	public String redirect(@RequestParam(name = "userLogin") String login, Model model) {

@@ -1,5 +1,7 @@
 package com.khodko.studyproject.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,7 +32,9 @@ public class MainController {
 			for (Cookie cookie : request.getCookies()) {
 				if (cookie.getName().equals("currentUser")) {
 					user = userDao.findByLogin(cookie.getValue());
+					List<User> users = userDao.findAll();
 					session.setAttribute("currentUser", user);
+					session.setAttribute("users", users);
 					return getViewName(user);
 				}
 			}

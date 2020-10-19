@@ -19,7 +19,7 @@ public class RemovalController {
 	
 	//TODO: Admin is not able to remove himself from the list of users. Figure out how to handle this sh*t
 	
-	private UserDao userDao;
+	private final UserDao userDao;
 	
 	@GetMapping("/remove")
 	public String removeUser(@RequestParam(name = "userId") long userId,

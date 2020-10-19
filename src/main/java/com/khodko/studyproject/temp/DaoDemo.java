@@ -89,14 +89,16 @@ public class DaoDemo {
 		
 		s.beginTransaction();
 		Query query = s.createQuery("from User u where u.email = 'petr'");
-		
-		try {
-			query.getSingleResult();
-			
-		} catch(NoResultException e) {
-			System.out.println("User not found");
-		}
+		User user = (User)query.uniqueResult();
+		System.out.println(user);
 		s.getTransaction().commit();
+//		try {
+//			query.getSingleResult();
+//			
+//		} catch(NoResultException e) {
+//			System.out.println("User not found");
+//		}
+//		s.getTransaction().commit();
 		
 		
 		s.close();
