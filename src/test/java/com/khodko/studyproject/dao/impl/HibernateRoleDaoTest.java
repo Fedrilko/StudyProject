@@ -57,6 +57,7 @@ public class HibernateRoleDaoTest extends DBTestCase {
         return DatabaseOperation.DELETE_ALL;
     }
 
+
     @Test
     public void shouldSaveNewRoleToTheDatabase() throws Exception {
         Role newRole = new Role("Guest");
