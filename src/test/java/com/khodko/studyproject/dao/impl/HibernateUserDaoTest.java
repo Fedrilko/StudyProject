@@ -42,7 +42,7 @@ public class HibernateUserDaoTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void update_ShouldUpdateExistingEntry() {
+    public void shouldUpdateExistingEntry() {
         Session session = sessionFactory.getCurrentSession();
         User user = (User) session.createQuery("from User u where u.login = 'fedor'").getSingleResult();
         String newFirstName = "Petr";
@@ -54,7 +54,7 @@ public class HibernateUserDaoTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void remove_ShouldRemoveExistingEntry() {
+    public void shouldRemoveExistingEntry() {
         Session session = sessionFactory.getCurrentSession();
         User user = (User) session.createQuery("from User u where u.login = 'fedor'").getSingleResult();
         userDao.remove(user);
@@ -65,7 +65,7 @@ public class HibernateUserDaoTest {
 
     @Test
     @Rollback(true)
-    public void findAll_shouldReturnQtyOfEntries() {
+    public void shouldReturnQtyOfEntries() {
         List<User> users = userDao.findAll();
         final int expectedNumberOfEntries = 2;
         assertEquals(expectedNumberOfEntries, users.size());
@@ -74,7 +74,7 @@ public class HibernateUserDaoTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void findAll_shouldReturnListOfZeroSizeIfTableIsEmpty() {
+    public void shouldReturnListOfZeroSizeIfTableIsEmpty() {
         Session session = sessionFactory.getCurrentSession();
         session.createNativeQuery("DELETE FROM users").executeUpdate();
         List<User> users = session.createQuery("from User").list();
@@ -82,27 +82,27 @@ public class HibernateUserDaoTest {
     }
 
     @Test
-    public void findByLogin_shouldReturnSpecifiedUser() {
+    public void shouldReturnSpecifiedUserWithSpecifiedLogin() {
         assertNotNull(userDao.findByLogin("fedor"));
     }
 
     @Test
-    public void findByLogin_shouldReturnNull() {
+    public void shouldReturnNullIfUserWithSpecifiedLoginDoesNotExist() {
         assertNull(userDao.findByLogin("oleg"));
     }
 
     @Test
-    public void findByEmail_shouldReturnSpecifiedUser() {
+    public void shouldReturnSpecifiedUserWithSpecifiedEmail() {
         assertNotNull(userDao.findByEmail("fedorkhodko@gmail.com"));
     }
 
     @Test
-    public void findByEmail_shouldReturnNull() {
+    public void shouldReturnNullIfUserWithSpecifiedEmailDoesNotExist() {
         assertNull(userDao.findByEmail("oleg@gmail.com"));
     }
 
     @Test
-    public void findByEmail_shouldReturnUserWithRoleAdmin() {
+    public void shouldReturnUserWithRoleAdmin() {
         User user = userDao.findByEmail("fedorkhodko@gmail.com");
         final String roleName = "Admin";
         assertEquals(roleName, user.getRole().getName());
