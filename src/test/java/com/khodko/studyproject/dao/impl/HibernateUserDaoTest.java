@@ -87,7 +87,7 @@ public class HibernateUserDaoTest {
     @Rollback(true)
     public void shouldReturnListOfZeroSizeIfTableIsEmpty() {
         Session session = sessionFactory.getCurrentSession();
-        session.createNativeQuery("DELETE FROM users").executeUpdate();
+        session.createNativeQuery("DELETE FROM sp_users").executeUpdate();
         List<User> users = session.createQuery("from User").list();
         assertEquals(users.size(), 0);
     }

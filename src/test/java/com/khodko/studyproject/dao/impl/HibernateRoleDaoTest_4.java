@@ -6,32 +6,38 @@ import org.dbunit.*;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.Test;
 
 public class HibernateRoleDaoTest_4 {
 
+
     @Test
     public void shouldSaveNewRoleToTheDatabase() throws Exception {
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
-                .getResourceAsStream("dataset.xml"));
         IDatabaseTester tester = new JdbcDatabaseTester("com.mysql.cj.jdbc.Driver",
-                "jdbc:mysql://localhost:3306/study_project_test?useUnicode=true&serverTimezone=GMT%2b8",
+                "jdbc:mysql://localhost:3306/test",
                 "root", "root");
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
+                .getResourceAsStream("dataset_person.xml"));
 
         tester.setDataSet(dataSet);
+        tester.setSetUpOperation(DatabaseOperation.REFRESH);
+        System.out.println(tester.getSetUpOperation());
         tester.onSetup();
 //        Role newRole = new Role("Guest");
-        tester.getConnection().getConnection().createStatement().executeUpdate("insert into roles (name) values('Guest')");
-
+//        tester.getConnection().getConnection().createStatement().executeUpdate("insert into roles (name) values('Guest')");
+        tester.getConnection().getConnection().createStatement().executeUpdate("insert into person (name) values('Fedor')");
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
-                        .getResourceAsStream("dataset_after_adding.xml"));
-        ITable expectedTable = expectedData.getTable("roles");
-
+                        .getResourceAsStream("dataset_person_after_adding.xml"));
+        ITable expectedTable = expectedData.getTable("person");
+        System.out.println(expectedTable.getRowCount());
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("roles");
+        ITable actualTable = actualData.getTable("person");
+        System.out.println(actualTable.getRowCount());
         Assertion.assertEquals(expectedTable, actualTable);
+        tester.setTearDownOperation(DatabaseOperation.TRUNCATE_TABLE);
+        tester.onTearDown();
     }
-
 
 }

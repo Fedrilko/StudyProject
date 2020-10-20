@@ -8,7 +8,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "sp_roles")
 @Data
 @NoArgsConstructor
 public class Role {
@@ -17,7 +17,7 @@ public class Role {
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private List<User> user;
 
     public Role(String name) {

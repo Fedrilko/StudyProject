@@ -5,6 +5,7 @@ import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 
@@ -18,10 +19,15 @@ public class DBUnitConfig extends DBTestCase {
 
     @Before
     public void setUp() throws Exception {
-        tester = new JdbcDatabaseTester(prop.getProperty("db.driver"),
-                prop.getProperty("db.url"),
-                prop.getProperty("db.username"),
-                prop.getProperty("db.password"));
+//        tester = new JdbcDatabaseTester(prop.getProperty("db.driver"),
+//                prop.getProperty("db.url"),
+//                prop.getProperty("db.username"),
+//                prop.getProperty("db.password"));
+        tester = new JdbcDatabaseTester("com.mysql.cj.jdbc.Driver",
+                "jdbc:mysql://localhost:3306/study_project_test?useUnicode=true&serverTimezone=GMT%2b8",
+                "root", "root");
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
+                .getResourceAsStream("dataset.xml"));
     }
 
     public DBUnitConfig(String name) {

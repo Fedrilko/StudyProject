@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "users")
+@Table(name = "sp_users")
 @Data
 @NoArgsConstructor
 public class User {
@@ -26,7 +26,7 @@ public class User {
     private String lastName;
     @Column(name = "birth_date")
     private Date birthDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
 
