@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sp_users")
@@ -26,7 +27,7 @@ public class User {
     private String lastName;
     @Column(name = "birth_date")
     private Date birthDate;
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
@@ -39,4 +40,5 @@ public class User {
         this.birthDate = birthDate;
         this.role = role;
     }
+
 }

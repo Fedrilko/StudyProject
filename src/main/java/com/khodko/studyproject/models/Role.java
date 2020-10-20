@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class Role {
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "role", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "role")
     private List<User> user;
 
     public Role(String name) {

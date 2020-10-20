@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <sp_roles id='1' name='Admin'/>
+    <sp_roles id='2' name='User'/>
     <sp_users id='1' login='fedor' password='root' email='fedorkhodko@gmail.com' first_name='Fedor'
            last_name='Khodko' birth_date='1989-10-16' role_id='1'/>
-<!--    <sp_users id='2' login='ivan' password='root' email='ivan@gmail.com' first_name='Ivan'-->
-<!--           last_name='Lykhosherst' birth_date='1987-09-02' role_id='2'/>-->
 </dataset>

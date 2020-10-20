@@ -90,15 +90,14 @@ public class HibernateRoleDaoTest {
     @Test
     public void shouldRemoveExistingEntry() throws Exception {
         //given
-        Role role = new Role("User");
-        role.setId(2l);
+        Role role = new Role("SuperAdmin");
+        role.setId(3l);
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_removing.xml"));
         ITable expectedTable = expectedData.getTable("sp_roles");
         //when
         roleDao.remove(role);
-//        tester.getConnection().getConnection().createStatement().executeUpdate("delete from sp_roles where id = '2'");
         IDataSet actualData = tester.getConnection().createDataSet();
         ITable actualTable = actualData.getTable("sp_roles");
         System.out.println("row count: " + actualTable.getRowCount());
@@ -106,7 +105,6 @@ public class HibernateRoleDaoTest {
         String[] ignore = {"id"};
         Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
     }
-
 
     @Test
     public void shouldReturnSpecifiedRole() {
