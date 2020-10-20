@@ -1,8 +1,15 @@
 package com.khodko.studyproject.dao.impl;
 
 import com.khodko.studyproject.dao.UserDao;
+import com.khodko.studyproject.models.Role;
 import com.khodko.studyproject.models.User;
-import org.hibernate.Session;
+import org.dbunit.Assertion;
+import org.dbunit.IDatabaseTester;
+import org.dbunit.JdbcDatabaseTester;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -10,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.transaction.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -26,51 +31,90 @@ public class HibernateUserDaoTest {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void create_ShouldAddNewEntry() {
-        //given
-        User user = new User("petr", "root", "petro@gmail.com", "Petr",
-                "Petrov", Date.valueOf("1989-10-16"), null);
-        //when
-        userDao.create(user);
-        //then
-        Session session = sessionFactory.getCurrentSession();
-        List<User> users = session.createQuery("from User").list();
-        final int numberOfEntriesAfterInsertion = 3;
-        assertEquals(numberOfEntriesAfterInsertion, users.size());
+    private IDatabaseTester tester;
+
+    @Before
+    public void setUp() throws Exception {
+        tester = new JdbcDatabaseTester("org.h2.Driver",
+                "jdbc:h2:mem:study_project_test;DB_CLOSE_DELAY=-1",
+                "root", "root");
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(getClass().getClassLoader()
+                .getResourceAsStream("dataset.xml"));
+        tester.setSetUpOperation(DatabaseOperation.REFRESH);
+        tester.setDataSet(dataSet);
+        tester.onSetup();
+    }
+
+    @After
+    public void cleanUp() throws Exception {
+        tester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
+        tester.onTearDown();
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
-    public void shouldUpdateExistingEntry() {
+    public void shouldAddNewEntry() throws Exception {
         //given
-        Session session = sessionFactory.getCurrentSession();
-        User user = (User) session.createQuery("from User u where u.login = 'fedor'").getSingleResult();
-        String newFirstName = "Petr";
-        user.setFirstName(newFirstName);
+        Role role = new Role("Admin");
+        role.setId(1l);
+        User newUser = new User("petr", "root", "petro@gmail.com", "Petr",
+                "Petrov", Date.valueOf("1989-10-16"), role);
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("dataset_after_adding.xml"));
+        ITable expectedTable = expectedData.getTable("sp_users");
         //when
-        userDao.update(user);
+        userDao.create(newUser);
+        IDataSet actualData = tester.getConnection().createDataSet();
+        ITable actualTable = actualData.getTable("sp_users");
         //then
-        assertEquals(newFirstName, session.get(User.class, user.getId()).getFirstName());
+        String[] ignore = {"id"};
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
-    public void shouldRemoveExistingEntry() {
+    public void shouldUpdateExistingEntry() throws Exception {
         //given
-        Session session = sessionFactory.getCurrentSession();
-        User user = (User) session.createQuery("from User u where u.login = 'fedor'").getSingleResult();
+        Role role = new Role("User");
+        role.setId(2l);
+        User existingUser = new User("fedor", "root", "fedorkhodko@gmail.com", "Fedor",
+                "Khodko", Date.valueOf("1989-10-16"), role);
+        existingUser.setId(1l);
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("dataset_after_updating.xml"));
+        ITable expectedTable = expectedData.getTable("sp_users");
         //when
-        userDao.remove(user);
+        userDao.update(existingUser);
+        IDataSet actualData = tester.getConnection().createDataSet();
+        ITable actualTable = actualData.getTable("sp_users");
+        System.out.println("row count: " + actualTable.getRowCount());
         //then
-        List<User> users = session.createQuery("from User").list();
-        final int numberOfEntriesAfterRemoval = 1;
-        assertEquals(numberOfEntriesAfterRemoval, users.size());
+        String[] ignore = {"id"};
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
     }
+
+    @Test
+    public void shouldRemoveExistingEntry() throws Exception {
+        //given
+        Role role = new Role("User");
+        role.setId(2l);
+        User existingUser = new User("ivan", "root", "ivan@gmail.com", "Ivan",
+                "Lykhosherst", Date.valueOf("1987-09-02"), role);
+        existingUser.setId(2l);
+        IDataSet expectedData = new FlatXmlDataSetBuilder().build(
+                Thread.currentThread().getContextClassLoader()
+                        .getResourceAsStream("dataset_after_removing.xml"));
+        ITable expectedTable = expectedData.getTable("sp_users");
+        //when
+        userDao.remove(existingUser);
+        IDataSet actualData = tester.getConnection().createDataSet();
+        ITable actualTable = actualData.getTable("sp_users");
+        System.out.println("row count: " + actualTable.getRowCount());
+        //then
+        String[] ignore = {"id"};
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+    }
+
 
     @Test
     @Rollback(true)
@@ -83,12 +127,12 @@ public class HibernateUserDaoTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
-    public void shouldReturnListOfZeroSizeIfTableIsEmpty() {
-        Session session = sessionFactory.getCurrentSession();
-        session.createNativeQuery("DELETE FROM sp_users").executeUpdate();
-        List<User> users = session.createQuery("from User").list();
+    public void shouldReturnListOfZeroSizeIfTableIsEmpty() throws Exception {
+        //given
+        tester.getConnection().getConnection().createStatement().executeUpdate("delete from sp_users");
+        //when
+        List<User> users = userDao.findAll();
+        //then
         assertEquals(users.size(), 0);
     }
 
