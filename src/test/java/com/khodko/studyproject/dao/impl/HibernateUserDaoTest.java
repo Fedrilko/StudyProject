@@ -135,6 +135,17 @@ public class HibernateUserDaoTest {
 
     @Test
     public void shouldReturnUserWithSpecifiedLogin() {
+//        //given
+//        Role role = new Role("Admin");
+//        role.setId(1l);
+//        User expectedUser = new User("fedor", "root", "fedorkhodko@gmail.com", "Fedor",
+//                "Khodko", Date.valueOf("1989-10-16"), role);
+//        expectedUser.setId(1l);
+//        //when
+//        User returnedUser = userDao.findByLogin("fedor");
+//        //then
+//        System.out.println(returnedUser.equals(expectedUser));
+//        assertEquals(expectedUser, returnedUser);
         assertNotNull(userDao.findByLogin("fedor"));
     }
 
@@ -145,6 +156,17 @@ public class HibernateUserDaoTest {
 
     @Test
     public void shouldReturnUserWithSpecifiedEmail() {
+//        //given
+//        Role role = new Role("Admin");
+//        role.setId(1l);
+//        User expectedUser = new User("fedor", "root", "fedorkhodko@gmail.com", "Fedor",
+//                "Khodko", Date.valueOf("1989-10-16"), role);
+//        expectedUser.setId(1l);
+//        //when
+//        User returnedUser = userDao.findByEmail("fedorkhodko@gmail.com");
+//        //then
+//        System.out.println(returnedUser.equals(expectedUser));
+//        assertEquals(expectedUser, returnedUser);
         assertNotNull(userDao.findByEmail("fedorkhodko@gmail.com"));
     }
 
