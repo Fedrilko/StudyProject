@@ -28,8 +28,6 @@ import static org.junit.Assert.*;
 public class HibernateUserDaoTest {
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private SessionFactory sessionFactory;
 
     private IDatabaseTester tester;
 
@@ -114,7 +112,6 @@ public class HibernateUserDaoTest {
         String[] ignore = {"id"};
         Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
     }
-
 
     @Test
     @Rollback(true)

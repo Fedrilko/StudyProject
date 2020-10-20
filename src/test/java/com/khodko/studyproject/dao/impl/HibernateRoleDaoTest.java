@@ -31,8 +31,6 @@ public class HibernateRoleDaoTest {
 
     @Autowired
     private RoleDao roleDao;
-    @Autowired
-    private SessionFactory sessionFactory;
 
     private IDatabaseTester tester;
 

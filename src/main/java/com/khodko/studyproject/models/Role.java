@@ -17,7 +17,7 @@ public class Role {
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "role", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<User> user;
 
     public Role(String name) {

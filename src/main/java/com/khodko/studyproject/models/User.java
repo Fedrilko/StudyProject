@@ -26,7 +26,7 @@ public class User {
     private String lastName;
     @Column(name = "birth_date")
     private Date birthDate;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "role_id")
     private Role role;
 
