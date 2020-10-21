@@ -41,10 +41,12 @@ public class LoginController {
 			return "login";
 		}
 		
+		//Put user into session
 		session.setAttribute("currentUser", user);
 		
+		//Create cookie
 		Cookie cookie = new Cookie("currentUser", user.getLogin());
-		cookie.setMaxAge(120);
+		cookie.setMaxAge(Integer.MAX_VALUE);
 		response.addCookie(cookie);
 		
 		if(user.getRole().getName().equals("User")) {

@@ -13,19 +13,20 @@
 <form action="login" method="POST">
 <div>
 <label>Login:</label>
-<input type="text" name="login" id="login"/>
+<input type="text" name="login" id="login" required/>
 </div>
 <div>
 <label>Password:</label>
-<input type="password" name="password" id="password"/>
+<input type="password" name="password" id="password" required/>
 </div>
 <div>
-<input type="submit" value="Sign in"/>
+<input type="submit" value="Sign in" id="login_submit"/>
 </div>
 </form>
 </div>
 <c:if test="${msg != null}">
 <p>${msg}</p>
 </c:if>
+<script src="<c:url value="/resources/js/validation_script.js" />" type="text/javascript"></script>
 </body>
 </html>

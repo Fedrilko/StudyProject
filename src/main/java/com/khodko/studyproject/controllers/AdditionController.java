@@ -30,7 +30,6 @@ public class AdditionController {
 		return "user_data";
 	}
 	
-	
 	@PostMapping("/add")
 	public String addUser(@ModelAttribute User user, @RequestParam(name = "role") String roleName,
 			HttpSession session, Model model) {
