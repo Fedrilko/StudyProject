@@ -6,6 +6,7 @@
 <head>
 <meta charset="utf-8">
 <title>Admin page</title>
+<link href="<c:url value="/resources/css/styles.css"/>" rel="stylesheet">
 </head>
 <body>
 <p>Admin ${currentUser.lastName} (<a href="logout">Logout</a>) </p>

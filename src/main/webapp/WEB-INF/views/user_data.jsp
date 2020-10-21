@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>User from</title>
+<link href="<c:url value="/resources/css/styles.css"/>" rel="stylesheet">
 </head>
 <body>
 <p>Admin ${currentUser.lastName} (<a href="logout">Logout</a>) </p>
@@ -50,7 +51,7 @@
 <div>
 <label>Birth day</label>
 <input type="text" id="birthDate" name="birthDate" value="${user.birthDate}" placeholder="YYYY-MM-DD"/>
-<label id="dirthday_msg" style="display:none;">Field can not be empty</label>
+<label id="birthday_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
 <label>Role</label>
@@ -81,7 +82,7 @@
 <p>${msg}</p>
 </c:if>
 
-<script type="text/javascript" src="resources/javascript/jquery.js"></script>
-<script type="text/javascript" src="resources/javascript/validation_script.js"></script>
+<script src="<c:url value="/resources/js/jquery.js" />"></script>
+<script src="<c:url value="/resources/js/validation_script.js" />"></script>
 </body>
 </html>
