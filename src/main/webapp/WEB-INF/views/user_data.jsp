@@ -10,12 +10,12 @@
 <body>
 <p>Admin ${currentUser.lastName} (<a href="logout">Logout</a>) </p>
 <h1>${action} user</h1>
-<form onsubmit="return false" action="${action.toLowerCase()}" method="post">
+<form action="${action.toLowerCase()}" method="post">
 <div>
 <label>Login</label>
 <c:choose>
 <c:when test="${action.equals(\"Add\")}">
-<input type="text" id="login" name="login" value="${user.login}"/>
+<input type="text" id="login" name="login" value="${user.login}" required/>
 <label id="email_msg" style="display:none;">Field can not be empty</label>
 </c:when>
 <c:when test="${action.equals(\"Edit\")}">
@@ -25,33 +25,34 @@
 </div>
 <div>
 <label>Password</label>
-<input type="password"  id="password" name="password" value="${user.password}"/>
+<input type="password" id="password" name="password" value="${user.password}" required/>
 <label id="password_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
 <label>Password again</label>
-<input type="password" value="${user.password}"/>
+<input type="password"  id="password_again" name="password_again" value="${user.password}" required/>
 <label id="password_rpt_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
 <label>Email</label>
-<input type="email" id="email" name="email" value="${user.email}"/>
+<input type="email" id="email" name="email" value="${user.email}" required/>
 <label id="email_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
 <label>First name</label>
-<input type="text" id="firstName" name="firstName" value="${user.firstName}"/>
+<input type="text" id="firstName" name="firstName" value="${user.firstName}" required/>
 <label id="first_name_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
 <label>Last name</label>
-<input type="text" id="lastName" name="lastName" value="${user.lastName}"/>
+<input type="text" id="lastName" name="lastName" value="${user.lastName}" required/>
 <label id="last_name_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
-<label>Birth day</label>
-<input type="text" id="birthDate" name="birthDate" value="${user.birthDate}" placeholder="YYYY-MM-DD"/>
-<label id="birthday_msg" style="display:none;">Field can not be empty</label>
+<label>Birthday</label>
+<input type="text" id="birthDate" name="birthDate" value="${user.birthDate}" 
+placeholder="YYYY-MM-DD" required/>
+<label id="birth_date_msg" style="display:none;">Field can not be empty</label>
 </div>
 <div>
 <label>Role</label>
@@ -73,7 +74,7 @@
 </select>
 </div>
 <div>
-<input type="submit" value="Ok" id="submit_form"/>
+<input type="submit" value="Ok"/>
 <a href="main">Cancel</a>
 <!--  <button>Cancel</button>-->
 </div>
@@ -83,6 +84,6 @@
 </c:if>
 
 <script src="<c:url value="/resources/js/jquery.js" />"></script>
-<script src="<c:url value="/resources/js/validation_script.js" />"></script>
+<script src="<c:url value="/resources/js/data_form_validation_script.js" />"></script>
 </body>
 </html>

@@ -32,6 +32,6 @@
 </c:if>
 
 <script src="<c:url value="/resources/js/jquery.js" />"></script>
-<script src="<c:url value="/resources/js/validation_script.js" />"></script>
+<script src="<c:url value="/resources/js/login_form_validation_script.js" />"></script>
 </body>
 </html>

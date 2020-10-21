@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,24 +21,21 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class LoginController {
 	
-	//TODO: add handling of different roles
-	
 	private final UserDao userDao;
 	
 	@PostMapping("/login")
 	public String login(@RequestParam(name = "login") String login, 
-			@RequestParam(name = "password") String password,
-			HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+			@RequestParam(name = "password") String password, Model model,
+			HttpSession session, HttpServletResponse response) {
 		
 		User user = userDao.findByLogin(login);
 		
 		if(user == null) {
-			request.setAttribute("msg", "User does not exist");
+			model.addAttribute("msg", "User does not exist");
 			return "login";
 		}
 		if(!password.equals(user.getPassword())) {
-			request.setAttribute("msg", "Wrong password");
+			model.addAttribute("msg", "Wrong password");
 			return "login";
 		}
 		
