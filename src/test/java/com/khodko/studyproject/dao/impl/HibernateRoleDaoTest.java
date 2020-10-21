@@ -34,6 +34,9 @@ public class HibernateRoleDaoTest {
 
     private IDatabaseTester tester;
 
+    private static final String TABLE_NAME = "sp_roles";
+    private static final String[] IGNORE = {"id"};
+
     @Before
     public void setUp() throws Exception {
         tester = new JdbcDatabaseTester("org.h2.Driver",
@@ -59,14 +62,13 @@ public class HibernateRoleDaoTest {
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_adding.xml"));
-        ITable expectedTable = expectedData.getTable("sp_roles");
+        ITable expectedTable = expectedData.getTable(TABLE_NAME);
         //when
         roleDao.create(newRole);
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("sp_roles");
+        ITable actualTable = actualData.getTable(TABLE_NAME);
         //then
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, IGNORE);
     }
 
     @Test
@@ -77,14 +79,13 @@ public class HibernateRoleDaoTest {
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_updating.xml"));
-        ITable expectedTable = expectedData.getTable("sp_roles");
+        ITable expectedTable = expectedData.getTable(TABLE_NAME);
         //when
         roleDao.update(role);
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("sp_roles");
+        ITable actualTable = actualData.getTable(TABLE_NAME);
         //then
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, IGNORE);
     }
 
     @Test
@@ -95,15 +96,13 @@ public class HibernateRoleDaoTest {
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_removing.xml"));
-        ITable expectedTable = expectedData.getTable("sp_roles");
+        ITable expectedTable = expectedData.getTable(TABLE_NAME);
         //when
         roleDao.remove(role);
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("sp_roles");
-        System.out.println("row count: " + actualTable.getRowCount());
+        ITable actualTable = actualData.getTable(TABLE_NAME);
         //then
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, IGNORE);
     }
 
     @Test

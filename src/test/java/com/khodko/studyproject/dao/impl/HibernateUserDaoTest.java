@@ -26,10 +26,15 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContextTest.xml"})
 public class HibernateUserDaoTest {
+
     @Autowired
     private UserDao userDao;
 
     private IDatabaseTester tester;
+
+    private static final String TABLE_NAME = "sp_users";
+    private static final String[] IGNORE = {"id"};
+    private static final String EMAIL = "fedorkhodko@gmail.com";
 
     @Before
     public void setUp() throws Exception {
@@ -59,14 +64,13 @@ public class HibernateUserDaoTest {
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_adding.xml"));
-        ITable expectedTable = expectedData.getTable("sp_users");
+        ITable expectedTable = expectedData.getTable(TABLE_NAME);
         //when
         userDao.create(newUser);
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("sp_users");
+        ITable actualTable = actualData.getTable(TABLE_NAME);
         //then
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, IGNORE);
     }
 
     @Test
@@ -74,21 +78,19 @@ public class HibernateUserDaoTest {
         //given
         Role role = new Role("User");
         role.setId(2l);
-        User existingUser = new User("fedor", "root", "fedorkhodko@gmail.com", "Fedor",
+        User existingUser = new User("fedor", "root", EMAIL, "Fedor",
                 "Khodko", Date.valueOf("1989-10-16"), role);
         existingUser.setId(1l);
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_updating.xml"));
-        ITable expectedTable = expectedData.getTable("sp_users");
+        ITable expectedTable = expectedData.getTable(TABLE_NAME);
         //when
         userDao.update(existingUser);
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("sp_users");
-        System.out.println("row count: " + actualTable.getRowCount());
+        ITable actualTable = actualData.getTable(TABLE_NAME);
         //then
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, IGNORE);
     }
 
     @Test
@@ -102,15 +104,14 @@ public class HibernateUserDaoTest {
         IDataSet expectedData = new FlatXmlDataSetBuilder().build(
                 Thread.currentThread().getContextClassLoader()
                         .getResourceAsStream("dataset_after_removing.xml"));
-        ITable expectedTable = expectedData.getTable("sp_users");
+        ITable expectedTable = expectedData.getTable(TABLE_NAME);
         //when
         userDao.remove(existingUser);
         IDataSet actualData = tester.getConnection().createDataSet();
-        ITable actualTable = actualData.getTable("sp_users");
+        ITable actualTable = actualData.getTable(TABLE_NAME);
         System.out.println("row count: " + actualTable.getRowCount());
         //then
-        String[] ignore = {"id"};
-        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, ignore);
+        Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, IGNORE);
     }
 
     @Test
@@ -135,17 +136,6 @@ public class HibernateUserDaoTest {
 
     @Test
     public void shouldReturnUserWithSpecifiedLogin() {
-//        //given
-//        Role role = new Role("Admin");
-//        role.setId(1l);
-//        User expectedUser = new User("fedor", "root", "fedorkhodko@gmail.com", "Fedor",
-//                "Khodko", Date.valueOf("1989-10-16"), role);
-//        expectedUser.setId(1l);
-//        //when
-//        User returnedUser = userDao.findByLogin("fedor");
-//        //then
-//        System.out.println(returnedUser.equals(expectedUser));
-//        assertEquals(expectedUser, returnedUser);
         assertNotNull(userDao.findByLogin("fedor"));
     }
 
@@ -156,18 +146,7 @@ public class HibernateUserDaoTest {
 
     @Test
     public void shouldReturnUserWithSpecifiedEmail() {
-//        //given
-//        Role role = new Role("Admin");
-//        role.setId(1l);
-//        User expectedUser = new User("fedor", "root", "fedorkhodko@gmail.com", "Fedor",
-//                "Khodko", Date.valueOf("1989-10-16"), role);
-//        expectedUser.setId(1l);
-//        //when
-//        User returnedUser = userDao.findByEmail("fedorkhodko@gmail.com");
-//        //then
-//        System.out.println(returnedUser.equals(expectedUser));
-//        assertEquals(expectedUser, returnedUser);
-        assertNotNull(userDao.findByEmail("fedorkhodko@gmail.com"));
+        assertNotNull(userDao.findByEmail(EMAIL));
     }
 
     @Test
@@ -178,7 +157,7 @@ public class HibernateUserDaoTest {
     @Test
     public void shouldReturnUserWithRoleAdmin() {
         //when
-        User user = userDao.findByEmail("fedorkhodko@gmail.com");
+        User user = userDao.findByEmail(EMAIL);
         //then
         final String roleName = "Admin";
         assertEquals(roleName, user.getRole().getName());
