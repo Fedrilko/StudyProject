@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:sec="http://www.springframework.org/schema/security"
-             xsi:schemaLocation="
-	    http://www.springframework.org/schema/security
-	    http://www.springframework.org/schema/security/spring-security-3.1.xsd
-	    http://www.springframework.org/schema/beans
-	    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+<beans:beans xmlns="http://www.springframework.org/schema/security"  
+    xmlns:beans="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://www.springframework.org/schema/security  
+    http://www.springframework.org/schema/security/spring-security.xsd">  
 
 <http auto-config="true">
-    <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
-<!--    <csrf disabled="true"/>-->
-<!--    <form-login-->
-<!--    login-page="/"-->
-<!--    default-target-url="/"-->
-<!--    always-use-default-target="false"-->
-<!--    authentication-failure-url="/"-->
-<!--    username-parameter="login"-->
-<!--    password-parameter="password" />-->
+    <intercept-url pattern="/" access="permitAll"/>
+    <intercept-url pattern="/**" access="isAuthenticated()"/>
+    <csrf disabled="true"/>
+    <form-login
+    login-page="/"
+    default-target-url="/main"
+    always-use-default-target="false"
+    authentication-failure-url="/TBD"
+    username-parameter="login"
+    password-parameter="password" />
 <!--    <logout logout-success-url="/TBD" />-->
-<!--    <access-denied-handler error-page="/TBD"/>-->
+<!--    <access-denied-handler error-page="/TBD"/>
+access="hasRole('ROLE_ADMIN')"
+-->
      
 </http> 
 
@@ -34,9 +35,10 @@
     <authentication-manager>
         <authentication-provider>
             <user-service>
-               <user name="admin@admin.com" password="admin" authorities="hasRole(ROLE_ADMIN)"/>
+               <user name="fedor" password="root" authorities="hasRole(ROLE_ADMIN)"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
+    
 
 </beans:beans>

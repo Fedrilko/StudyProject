@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,12 +23,18 @@ import lombok.AllArgsConstructor;
 public class LoginController {
 	
 	private final UserDao userDao;
-	
+
+//	@GetMapping("/login")
+//	public String showLoginPage() {
+//		return "login";
+//	}
+
+
 	@PostMapping("/login")
 	public String login(@RequestParam(name = "login") String login, 
 			@RequestParam(name = "password") String password, Model model,
 			HttpSession session, HttpServletResponse response) {
-		
+		System.out.println("----------Inside of login controller----------");
 		User user = userDao.findByLogin(login);
 		
 		if(user == null) {

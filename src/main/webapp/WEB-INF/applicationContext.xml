@@ -41,4 +41,9 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	 <!-- Spring security beans-->
+	<bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" 
+	factory-method = "getInstance" />	
+	 
+	
 </beans>

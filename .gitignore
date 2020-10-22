@@ -4,3 +4,5 @@ target
 META-INF
 .bin
 .settings
+.classpath
+.project
