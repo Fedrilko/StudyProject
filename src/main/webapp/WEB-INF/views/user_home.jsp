@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <title>User page</title>
-<link href="<c:url value="/resources/css/styles.css"/>" rel="stylesheet">
 </head>
 <body>
 <h1>Hello, ${currentUser.firstName}!</h1>

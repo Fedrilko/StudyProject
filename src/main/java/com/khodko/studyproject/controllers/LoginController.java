@@ -24,17 +24,17 @@ public class LoginController {
 	
 	private final UserDao userDao;
 
-//	@GetMapping("/login")
-//	public String showLoginPage() {
-//		return "login";
-//	}
+	@GetMapping("/login")
+	public String showLoginPage() {
+		return "login";
+	}
 
 
 	@PostMapping("/login")
 	public String login(@RequestParam(name = "login") String login, 
 			@RequestParam(name = "password") String password, Model model,
 			HttpSession session, HttpServletResponse response) {
-		System.out.println("----------Inside of login controller----------");
+		System.out.println("----------Inside of login controller----------"); //debug line
 		User user = userDao.findByLogin(login);
 		
 		if(user == null) {
