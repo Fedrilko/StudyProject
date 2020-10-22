@@ -24,6 +24,7 @@ public class AuthProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		System.out.println("--------Inside authenticate method--------");//debug line
 		String login = authentication.getName();
 		User user = userDao.findByLogin(login);
 		if (user == null) throw new UsernameNotFoundException("User not found");
@@ -33,6 +34,7 @@ public class AuthProvider implements AuthenticationProvider {
 		}
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName().toUpperCase()));
+		System.out.println("USER ROLE: " + authorities.get(0));//debug line
 		return new UsernamePasswordAuthenticationToken(user, null, authorities);
 	}
 

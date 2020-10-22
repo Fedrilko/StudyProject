@@ -10,28 +10,33 @@
 
 <http auto-config="true">
     <intercept-url pattern="/" access="permitAll"/>
-    <intercept-url pattern="/**" access="isAuthenticated()"/>
+
+    <intercept-url pattern="/add" access="hasRole('ROLE_ADMIN')"/>
     <csrf disabled="true"/>
     <form-login
     login-page="/"
-    default-target-url="/main"
+    default-target-url="/"
     always-use-default-target="false"
     authentication-failure-url="/TBD"
     username-parameter="login"
     password-parameter="password" />
-<!--    <logout logout-success-url="/TBD" />-->
-<!--    <access-denied-handler error-page="/TBD"/>
+<!--    
+<logout logout-success-url="/TBD" />
+<access-denied-handler error-page="/TBD"/>
 access="hasRole('ROLE_ADMIN')"
+
+<intercept-url pattern="/**" access="isAuthenticated()"/>
 -->
      
 </http> 
 
-<!--<b:bean id="authProvider" class="com.khodko.studyproject.security.AuthProvider" />-->
+<beans:bean id="authProvider" class="com.khodko.studyproject.security.AuthProvider" />
 
-<!--<authentication-manager>-->
-<!--	<authentication-provider ref="authProvider"/>            -->
-<!--</authentication-manager>-->
-    
+<authentication-manager>
+	<authentication-provider ref="authProvider"/>            
+</authentication-manager>
+ 
+ <!--   
     <authentication-manager>
         <authentication-provider>
             <user-service>
@@ -39,6 +44,6 @@ access="hasRole('ROLE_ADMIN')"
             </user-service>
         </authentication-provider>
     </authentication-manager>
-    
+   --> 
 
 </beans:beans>
