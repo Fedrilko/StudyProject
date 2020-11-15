@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Transactional
 public class HibernateUserDao implements UserDao {
-	
-	private final SessionFactory sessionFactory;
-	
+
+    private final SessionFactory sessionFactory;
+
     @Override
     public void create(User user) {
-    	Session session = sessionFactory.getCurrentSession();
-    	session.save(user);
+        Session session = sessionFactory.getCurrentSession();
+        session.save(user);
     }
 
     @Override
@@ -47,10 +47,10 @@ public class HibernateUserDao implements UserDao {
 
     @Override
     public User findByLogin(String login) { //login s/b unique in the database
-    	Session session = sessionFactory.getCurrentSession();
-    	Query query = session.createQuery("from User u where u.login = :login");
-    	query.setParameter("login", login);
-        return (User)query.uniqueResult();
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User u where u.login = :login");
+        query.setParameter("login", login);
+        return (User) query.uniqueResult();
     }
 
     @Override
@@ -58,6 +58,6 @@ public class HibernateUserDao implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User u where u.email = :email");
         query.setParameter("email", email);
-        return (User)query.uniqueResult();
+        return (User) query.uniqueResult();
     }
 }

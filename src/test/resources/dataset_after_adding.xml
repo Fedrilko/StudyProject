@@ -5,9 +5,9 @@
     <sp_roles id='3' name='SuperAdmin'/>
     <sp_roles id='4' name='Guest'/>
     <sp_users id='1' login='fedor' password='root' email='fedorkhodko@gmail.com' first_name='Fedor'
-           last_name='Khodko' birth_date='1989-10-16' role_id='1'/>
+              last_name='Khodko' birth_date='1989-10-16' role_id='1'/>
     <sp_users id='2' login='ivan' password='root' email='ivan@gmail.com' first_name='Ivan'
-           last_name='Lykhosherst' birth_date='1987-09-02' role_id='2'/>
+              last_name='Lykhosherst' birth_date='1987-09-02' role_id='2'/>
     <sp_users id='3' login='petr' password='root' email='petro@gmail.com' first_name='Petr'
               last_name='Petrov' birth_date='1989-10-16' role_id='1'/>
 </dataset>

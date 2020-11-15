@@ -15,30 +15,30 @@ import com.khodko.studyproject.services.AgeCalculationService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContextTest.xml"})
 public class BasicAgeCalculationServiceTest {
-	
-	@Autowired
-	private AgeCalculationService service;
 
-	@Test
-	public void calculateAge_shouldReturnCalculatedAge() {
-		Date dateOfBirth = Date.valueOf("1989-10-16");
-		Date arbitraryDate = Date.valueOf("2020-10-17");
-		int actualAge = service.calculateAge(dateOfBirth, arbitraryDate);
-		final int expectedAge = 31;
-		assertEquals(expectedAge, actualAge);
-	}
-	
-	@Test
-	public void calculateAge_shouldReturnMinusOneIfBirthDateIsNull() {
-		int actualValue = service.calculateAge(null, new Date(0));
-		assertEquals(-1, actualValue);
-	}
-	
-	@Test
-	public void calculateAge_shouldReturnMinusOneIfCurrentDateIsNull() {
-		int actualValue = service.calculateAge(new Date(0), null);
-		assertEquals(-1, actualValue);
-	}
+    @Autowired
+    private AgeCalculationService service;
+
+    @Test
+    public void calculateAge_shouldReturnCalculatedAge() {
+        Date dateOfBirth = Date.valueOf("1989-10-16");
+        Date arbitraryDate = Date.valueOf("2020-10-17");
+        int actualAge = service.calculateAge(dateOfBirth, arbitraryDate);
+        final int expectedAge = 31;
+        assertEquals(expectedAge, actualAge);
+    }
+
+    @Test
+    public void calculateAge_shouldReturnMinusOneIfBirthDateIsNull() {
+        int actualValue = service.calculateAge(null, new Date(0));
+        assertEquals(-1, actualValue);
+    }
+
+    @Test
+    public void calculateAge_shouldReturnMinusOneIfCurrentDateIsNull() {
+        int actualValue = service.calculateAge(new Date(0), null);
+        assertEquals(-1, actualValue);
+    }
 
 
 }

@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
-	$("#form_submit").click(function() {
-		
+    $("#form_submit").click(function () {
 
-	});
+
+    });
 
 });

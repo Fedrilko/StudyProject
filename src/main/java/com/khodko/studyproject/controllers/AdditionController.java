@@ -22,33 +22,33 @@ import lombok.AllArgsConstructor;
 public class AdditionController {
 	
 	//TODO: Resolve access issue with get mapping for /add
-	
-	private final UserDao userDao;
-	private final RoleDao roleDao;
-	
-	@GetMapping("/add")
-	public String redirect(Model model) {
-		model.addAttribute("action", "Add");
-		return "user_data";
-	}
-	
-	@PostMapping("/add")
-	public String addUser(@ModelAttribute User user, @RequestParam(name = "role") String roleName,
-			HttpSession session, Model model) {
-		
-		//Check whether user with provided login already exists:
-		if(userDao.findByLogin(user.getLogin()) != null) {
-			model.addAttribute("msg", "User with specified login already exists");
-			model.addAttribute("action", "Add");
-			return "user_data";
-		}
-		
-		user.setRole(roleDao.findByName(roleName));
-		userDao.create(user);
-		
-		//Add user to session:
-		((List<User>)session.getAttribute("users")).add(user);
-	
-		return "admin_home";
-	}
+
+    private final UserDao userDao;
+    private final RoleDao roleDao;
+
+    @GetMapping("/add")
+    public String redirect(Model model) {
+        model.addAttribute("action", "Add");
+        return "user_data";
+    }
+
+    @PostMapping("/add")
+    public String addUser(@ModelAttribute User user, @RequestParam(name = "role") String roleName,
+                          HttpSession session, Model model) {
+
+        //Check whether user with provided login already exists:
+        if (userDao.findByLogin(user.getLogin()) != null) {
+            model.addAttribute("msg", "User with specified login already exists");
+            model.addAttribute("action", "Add");
+            return "user_data";
+        }
+
+        user.setRole(roleDao.findByName(roleName));
+        userDao.create(user);
+
+        //Add user to session:
+        ((List<User>) session.getAttribute("users")).add(user);
+
+        return "admin_home";
+    }
 }

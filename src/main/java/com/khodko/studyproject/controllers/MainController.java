@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.khodko.studyproject.dao.UserDao;
@@ -22,16 +21,16 @@ import lombok.AllArgsConstructor;
 public class MainController {
 
 	//TODO: cookies support, resolve script issue on views, sending messages on view
-	
+
 	private final UserDao userDao;
-	
+
 	@RequestMapping({ "/main", "/" })
 	public String main(HttpSession session, Authentication authentication, Model model) {
-		
+
 		if (authentication == null) {
 			return "login";
 		}
-		
+
 		User user = (User) authentication.getPrincipal();
 		if(user.getRole().getName().equals("Admin")) {
 			List<User> users = userDao.findAll();
@@ -47,7 +46,7 @@ public class MainController {
 		} else
 			return "admin_home";
 	}
-	
+
 //Uncomment following to use custom auth functionality (non-spring security):
 //	@RequestMapping({ "/main", "/" })
 //	public String main(HttpSession session, HttpServletRequest request) {
@@ -71,5 +70,3 @@ public class MainController {
 //		return "login";
 //	}
 }
-
-

@@ -25,7 +25,7 @@
     authentication-failure-url="/main"
     username-parameter="login"
     password-parameter="password" />
-    
+
 <!--    
 <logout logout-success-url="/TBD" />
 <access-denied-handler error-page="/TBD"/>
@@ -42,5 +42,14 @@ access="hasRole('ROLE_ADMIN')"
 	<authentication-provider ref="authProvider"/>            
 </authentication-manager>
  
+ <!--   
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+               <user name="fedor" password="root" authorities="hasRole(ROLE_ADMIN)"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+   --> 
 
 </beans:beans>

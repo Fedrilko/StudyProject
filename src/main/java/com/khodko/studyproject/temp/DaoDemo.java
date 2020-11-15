@@ -16,14 +16,14 @@ import javax.persistence.NoResultException;
 
 public class DaoDemo {
 
-	public static void main(String[] args) {
-		SessionFactory sf = new Configuration().configure("hibernate.cfg2.xml")
-				.addAnnotatedClass(User.class)
-				.addAnnotatedClass(Role.class)
-				.buildSessionFactory();
+    public static void main(String[] args) {
+        SessionFactory sf = new Configuration().configure("hibernate.cfg2.xml")
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Role.class)
+                .buildSessionFactory();
 
-		Session s = sf.openSession();
-		//save user
+        Session s = sf.openSession();
+        //save user
 //		s.beginTransaction();
 //		User u  = new User("ivan", "root", "lol@kek.com", "Ivan",
 //				"Ivanov", Date.valueOf("1989-10-16"), null);
@@ -39,7 +39,7 @@ public class DaoDemo {
 //		s.getTransaction().commit();
 
 
-		//update user
+        //update user
 //		s.beginTransaction();
 //		Query query = s.createQuery("from User u where u.login = 'fredor'");
 //		User user = (User)query.getSingleResult();
@@ -51,7 +51,7 @@ public class DaoDemo {
 //		s.getTransaction().commit();
 
 
-		//update role
+        //update role
 //		s.beginTransaction();
 //		Role role = new Role("User");
 //		role.setId(1);
@@ -62,7 +62,7 @@ public class DaoDemo {
 //		s.getTransaction().commit();
 
 
-		//update user
+        //update user
 //		s.beginTransaction();
 //		User user  = new User("fedor", "root", "ssdfsdfdfsdfdf@kek.com", "Fedor",
 //				"Fedorov", new Date(1989, 10,16), null);
@@ -86,12 +86,12 @@ public class DaoDemo {
 //		s.save(u);
 //		s.getTransaction().commit();
 
-		
-		s.beginTransaction();
-		Query query = s.createQuery("from User u where u.email = 'petr'");
-		User user = (User)query.uniqueResult();
-		System.out.println(user);
-		s.getTransaction().commit();
+
+        s.beginTransaction();
+        Query query = s.createQuery("from User u where u.email = 'petr'");
+        User user = (User) query.uniqueResult();
+        System.out.println(user);
+        s.getTransaction().commit();
 //		try {
 //			query.getSingleResult();
 //			
@@ -99,18 +99,18 @@ public class DaoDemo {
 //			System.out.println("User not found");
 //		}
 //		s.getTransaction().commit();
-		
-		
-		s.close();
-		sf.close();
-	}
 
-	public static Role getRole(String roleName, SessionFactory sf) {
-		try(Session s = sf.openSession()) {
-			Query q = s.createQuery("from Role r where r.name = :name");
-			q.setParameter("name", roleName);
-			return (Role)q.getSingleResult();
-		}
-	}
+
+        s.close();
+        sf.close();
+    }
+
+    public static Role getRole(String roleName, SessionFactory sf) {
+        try (Session s = sf.openSession()) {
+            Query q = s.createQuery("from Role r where r.name = :name");
+            q.setParameter("name", roleName);
+            return (Role) q.getSingleResult();
+        }
+    }
 
 }

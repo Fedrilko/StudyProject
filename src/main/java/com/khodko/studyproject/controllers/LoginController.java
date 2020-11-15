@@ -34,7 +34,7 @@ public class LoginController {
 	public String login(@RequestParam(name = "login") String login, 
 			@RequestParam(name = "password") String password, Model model,
 			HttpSession session, HttpServletResponse response) {
-		System.out.println("----------Inside of login controller----------"); //debug line
+		System.out.println("----------Inside of login controller----------");
 		User user = userDao.findByLogin(login);
 		
 		if(user == null) {
